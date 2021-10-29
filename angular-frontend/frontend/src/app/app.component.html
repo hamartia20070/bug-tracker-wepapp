@@ -1,0 +1,15 @@
+<div class="App" >
+  <div class="wrapper">
+    <router-outlet name='side-bar'></router-outlet>
+    <div  class="main-panel">
+      <router-outlet name='header'></router-outlet>
+      <div class="content">
+        <div  class="container-fluid">
+          
+          <router-outlet ></router-outlet>
+        </div>
+      </div>
+      <router-outlet name='footer'></router-outlet>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,188 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Edit Ticket</h4>
+            <p class="card-category">{{ ticket.ticketTitle }}</p>
+          </div>
+          <div class="card-body">
+            <form
+              #updateTicketForm="ngForm"
+              (ngSubmit)="onUpdateTicket(updateTicketForm)"
+            >
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Ticket Title</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="this.ticket.ticketTitle"
+                      ngModel
+                      name="ticket_title"
+                      #input
+                      required
+                      maxlength="50"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Ticket Description</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="this.ticket.ticketDesc"
+                      ngModel
+                      name="ticket_desc"
+                      #input
+                      required
+                      maxlength="1000"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <div ngbDropdown class="d-inline-block">
+                    <button
+                      class="btn btn-outline-primary"
+                      id="priorityDropDown"
+                      ngbDropdownToggle
+                      type="button"
+                    >
+                      Status
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="priorityDropDown">
+                      <button
+                        ngbDropdownItem
+                        type="button"
+                        (click)="setStatus('OPEN')"
+                      >
+                        Open
+                      </button>
+                      <button
+                        ngbDropdownItem
+                        type="button"
+                        (click)="setStatus('CLOSED')"
+                      >
+                        Closed
+                      </button>
+                      <button
+                        ngbDropdownItem
+                        type="button"
+                        (click)="setStatus('ONHOLD')"
+                      >
+                        On Hold
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2 center" align-items="center">
+                  <label
+                    class="bmd-label-floating center"
+                    text-align="center"
+                    vertical-align="middle"
+                    >Ticket Status: {{ this.selectedStatus.toLowerCase() }}
+                  </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <div ngbDropdown class="d-inline-block">
+                    <button
+                      class="btn btn-outline-primary"
+                      id="priorityDropDown"
+                      ngbDropdownToggle
+                      type="button"
+                    >
+                      Priority
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="priorityDropDown">
+                      <button
+                        ngbDropdownItem
+                        *ngFor="let prio of priorities"
+                        (click)="setPriority(prio)"
+                        type="button"
+                      >
+                        Type: {{ prio.priorityType }} | Importance:
+                        {{ prio.importance }} (higher the more important)
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 center" align-items="center">
+                  <label
+                    class="bmd-label-floating center"
+                    text-align="center"
+                    vertical-align="middle"
+                    >Ticket Priority:
+                    {{ this?.selectedPriority?.priorityType }} <br />
+                    Importance level: {{ this?.selectedPriority?.importance }}
+                  </label>
+                </div>
+                <div class="col-md-2 center" align-items="center"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="bmd-label-floating"
+                      >Ticket Start & Deadline</label
+                    >
+                    <div></div>
+                    <ngb-datepicker
+                      class="btn btn-primary btn-link btn-sm"
+                      #dp
+                      ngModel
+                      name="ticket_deadline"
+                      [displayMonths]="2"
+                      [dayTemplate]="t"
+                      outsideDays="hidden"
+                      (dateSelect)="onDateSelection($event)"
+                    ></ngb-datepicker>
+                    <ng-template #t let-date let-focused="focused">
+                      <span
+                        class="custom-day btn btn-primary btn-link btn-sm"
+                        [class.focused]="focused"
+                        [class.range]="isRange(date)"
+                        [class.faded]="isHovered(date) || isInside(date)"
+                        (mouseenter)="hoveredDate = date"
+                        (mouseleave)="hoveredDate = null"
+                      >
+                        {{ date.day }}
+                      </span>
+                    </ng-template>
+                    <hr />
+                    <pre class="text-primary">
+From: {{ this.fromDate.year }}/{{ this.fromDate.month }}/{{
+                        this.fromDate.day
+                      }} To: {{ this?.toDate?.year }}/{{
+                        this?.toDate?.month
+                      }}/{{ this?.toDate?.day }}
+                        </pre
+                    >
+                  </div>
+                </div>
+              </div>
+              <button
+                [disabled]="!updateTicketForm.valid"
+                type="submit"
+                class="btn btn-primary pull-right"
+              >
+                Update Ticket
+              </button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!--<div class="card card-stats col-md-4">
+          </div>-->
+    </div>
+  </div>
+</div>

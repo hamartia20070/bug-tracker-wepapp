@@ -1,0 +1,8 @@
+
+    <td>{{user.id}}</td>
+    <td>{{user.userName}}</td>
+    <td>{{userStats.ticketsCompletedByUser}}</td>
+    <td>{{userStats.ticketsCreatedByUser}}</td>
+    <td>{{userStats.ticketsAssignedToUser}}</td>
+    <td>{{this.userProjectLink.role.roleType}} : {{this.userProjectLink.role.accessLevel==1 ? 'Read':'' || this.userProjectLink.role.accessLevel==2 ? 'Read & Write': '' || this.userProjectLink.role.accessLevel==3 ? 'Owner': '' }}</td>
+

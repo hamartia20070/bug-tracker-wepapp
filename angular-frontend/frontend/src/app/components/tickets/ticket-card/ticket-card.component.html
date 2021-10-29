@@ -1,0 +1,85 @@
+<div class="card card-stats">
+  <div class="card-header card-header-danger card-header-icon">
+    <div
+      class="card-icon"
+      [ngClass]="{
+        'card-header card-header-success card-header-icon':
+          this.ticket.status == 'OPEN',
+        'card-header card-header-warning card-header-icon':
+          this.ticket.status == 'ONHOLD',
+        'card-header card-header-danger card-header-icon':
+          this.ticket.status == 'CLOSED'
+      }"
+    >
+      <i class="material-icons">bug_report</i>
+    </div>
+    <p class="card-category">Ticket: {{ ticket.status.toLowerCase() }}</p>
+    <h3 class="card-title">
+      {{ ticket.ticketTitle }}
+    </h3>
+  </div>
+  <div class="card-footer">
+    <div class="stats">
+      <a>Comments: {{ commentCount }}</a>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div
+      class="stats"
+      [ngClass]="
+        ticket.assignedUser?.userName == this.currentUsername
+          ? 'stats text-warning'
+          : 'stats'
+      "
+    >
+      <a>Assigned to: {{ ticket.assignedUser?.userName }} </a>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div
+      class="stats"
+      [ngClass]="this.deadlineBool ? 'stats text-danger' : 'stats'"
+    >
+      <a
+        >Deadline:
+        {{ this.datepipe.transform(this.ticket.deadline, "yyyy-MM-dd") }}
+      </a>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="stats">
+      <a
+        >Priority: {{ ticket.ticketPriority.priorityType }} && Level:
+        {{ ticket.ticketPriority.importance }}</a
+      >
+    </div>
+  </div>
+  <div class="card-footer container-fluid">
+    <div class="stats row col-md-12 container-fluid">
+      <a> Tags: </a>
+
+      <button
+        type="button"
+        rel="tooltip"
+        title="View tickets with this tag"
+        class="btn btn-info btn-link btn-sm"
+        *ngFor="let tag of ticket.tags"
+        (click)="onTagClick(tag)"
+      >
+        <a>{{ tag.tag }} </a>
+      </button>
+    </div>
+  </div>
+  <div class="card-footer pull-right">
+    <div class="col-md-8"></div>
+    <button
+      type="button"
+      rel="tooltip"
+      title="View ticket"
+      class="btn btn-primary btn-link btn-sm pull-right"
+      (click)="openTicket()"
+    >
+      <i class="material-icons">visibility</i>
+    </button>
+  </div>
+</div>

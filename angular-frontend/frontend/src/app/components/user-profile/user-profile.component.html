@@ -1,0 +1,90 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Edit Profile</h4>
+            <p class="card-category">Complete your profile</p>
+          </div>
+          <div class="card-body">
+            <form #updateUserForm="ngForm"  (ngSubmit)="onUpdateUser(updateUserForm)">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Username</label>
+                    <input type="text" class="form-control" [(ngModel)]="this.user.userName" ngModel name="user_username" #input required maxlength="45" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Email address</label>
+                    <input  type="email" class="form-control" [(ngModel)]="this.user.userEmail" ngModel name="user_email" #input required maxlength="45" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Phone No</label>
+                    <input  type="text" class="form-control" [(ngModel)]="this.user.userPhoneNo" ngModel name="user_phone" #input required maxlength="45" />
+                  </div>
+                </div>
+              </div>
+              <button type="submit" [disabled]="!updateUserForm.valid" class="btn btn-primary pull-right">
+                Update Profile
+              </button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-stats col-md-4">
+        <div class="card-header card-header-primary card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">person</i>
+          </div>
+
+          <h3 class="card-title">{{this.user?.userName}}</h3>
+        </div>
+        <div class="card-category">
+          <div class="stats">
+            <a>Email: {{this.user?.userEmail}}</a>
+          </div>
+        </div>
+        <div class="card-category">
+          <div class="stats">
+            <a>Phone no: {{this.user?.userPhoneNo}}</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+      <div class="card">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title">Update Pass (Not Done Yet)</h4>
+        </div>
+        <div class="card-body">
+          <form #updatePassForm="ngForm">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="bmd-label-floating">New Password</label>
+                  <input type="password" class="form-control" ngModel name="password" #input required maxlength="100" />
+                </div>
+              </div>
+            </div>
+            <button type="submit" [disabled]="!updatePassForm.valid" class="btn btn-primary pull-right">
+              Update Password
+            </button>
+            <div class="clearfix"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,117 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        <div ngbDropdown class="d-inline-block">
+          <button
+            class="btn btn-outline-primary"
+            id="priorityDropDown"
+            ngbDropdownToggle
+            type="button"
+          >
+            Sort By:
+            {{ this.sortBy == "activity" ? "Activity (static)" : this.sortBy }}
+          </button>
+          <div ngbDropdownMenu aria-labelledby="priorityDropDown">
+            <button ngbDropdownItem (click)="changeSortBy('created')">
+              Date Created
+            </button>
+            <button ngbDropdownItem (click)="changeSortBy('priority')">
+              Priority
+            </button>
+            <button ngbDropdownItem (click)="changeSortBy('activity')">
+              Last Active
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div ngbDropdown class="d-inline-block">
+          <button
+            class="btn btn-outline-primary"
+            id="priorityDropDown"
+            ngbDropdownToggle
+            type="button"
+          >
+            Get By: {{ this.getBy }}
+          </button>
+          <div ngbDropdownMenu aria-labelledby="priorityDropDown">
+            <button ngbDropdownItem (click)="changeGetBy('all')">All</button>
+            <button ngbDropdownItem (click)="changeGetBy('assigned')">
+              Assigned to project
+            </button>
+            <button ngbDropdownItem (click)="changeGetBy('active')">
+              Active
+            </button>
+            <button ngbDropdownItem (click)="changeGetBy('closed')">
+              Closed
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div ngbDropdown class="d-inline-block">
+          <button
+            class="btn btn-outline-primary"
+            id="priorityDropDown"
+            ngbDropdownToggle
+            type="button"
+          >
+            Filter By Priority: {{ this.filterBy || "All" }}
+          </button>
+          <div ngbDropdownMenu aria-labelledby="priorityDropDown">
+            <button
+              ngbDropdownItem
+              *ngFor="let level of priorityLevels"
+              (click)="changeFilterBy(level)"
+            >
+              Priority {{ level }}
+            </button>
+            <button ngbDropdownItem (click)="changeFilterBy('')">
+              All Priority
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-2">
+        <button
+          class="btn btn-outline-primary"
+          title="Create New Project"
+          type="button"
+          routerLink="./add"
+        >
+          Add New Projet
+          <i class="material-icons">add</i>
+          <div class="ripple-container"></div>
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <app-project-card
+        class="col-lg-3 col-md-6 col-sm-6"
+        *ngFor="let project of projects"
+        [project]="project"
+      ></app-project-card>
+    </div>
+
+    <button
+      type="button"
+      rel="tooltip"
+      title="Previous 10 Projects"
+      class="btn btn-primary btn-link btn-sm btn-outline-primary"
+      (click)="previousProjects()"
+    >
+      <i class="material-icons">chevron_left</i>
+    </button>
+    <button
+      type="button"
+      rel="tooltip"
+      title="Next 10 Projects"
+      class="btn btn-primary btn-link btn-sm btn-outline-primary"
+      (click)="nextProjects()"
+    >
+      <i class="material-icons">chevron_right</i>
+    </button>
+  </div>
+</div>

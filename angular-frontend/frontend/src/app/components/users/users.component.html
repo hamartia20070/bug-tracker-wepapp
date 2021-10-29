@@ -1,0 +1,34 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2"></div>
+    </div>
+    <div class="row">
+      <app-user-card
+        class="col-md-5 col-sm-2"
+        *ngFor="let user of users"
+        [user]="user"
+      ></app-user-card>
+    </div>
+    <div class="row">
+      <button
+        type="button"
+        rel="tooltip"
+        title="Previous 10 Projects"
+        class="btn btn-primary btn-link btn-sm btn-outline-primary"
+        (click)="previousUsers()"
+      >
+        <i class="material-icons">chevron_left</i>
+      </button>
+      <button
+        type="button"
+        rel="tooltip"
+        title="Next 10 Projects"
+        class="btn btn-primary btn-link btn-sm btn-outline-primary"
+        (click)="nextUsers()"
+      >
+        <i class="material-icons">chevron_right</i>
+      </button>
+    </div>
+  </div>
+</div>

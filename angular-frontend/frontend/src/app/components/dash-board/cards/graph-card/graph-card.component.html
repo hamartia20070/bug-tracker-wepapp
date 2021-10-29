@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-header card-header-success">
+    <div class="areachart-wrapper ">
+      <ngx-charts-bar-vertical
+        [view]="view"
+        [results]="items"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        (select)="onSelect($event)"
+        [legendPosition]="legendPosition"
+      >
+      </ngx-charts-bar-vertical>
+    </div>
+  </div>
+  <div class="card-body">
+    <h4 class="card-title">{{cardTitle}}</h4>
+  </div>
+</div>

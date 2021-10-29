@@ -1,0 +1,108 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <app-stat-card
+        class="col-lg-3 col-md-6 col-sm-6"
+        [cardIcon]="'view_list'"
+        [cardCategory]="'All Projects Count'"
+        [cardTitle]="allProjectCount.toString()"
+      ></app-stat-card>
+      <app-stat-card
+        class="col-lg-3 col-md-6 col-sm-6"
+        [cardIcon]="'task'"
+        [cardCategory]="'Complete/All Tickets'"
+        [cardTitle]="
+          allAndFinishedTickets[1] + ' / ' + allAndFinishedTickets[0]
+        "
+      ></app-stat-card>
+      <app-stat-card
+        class="col-lg-3 col-md-6 col-sm-6"
+        [cardIcon]="'add'"
+        [cardCategory]="'You assigned tickets Count'"
+        [cardTitle]="userAssignedAndCreatedTicketsCount[0].toString()"
+      ></app-stat-card>
+      <app-stat-card
+        class="col-lg-3 col-md-6 col-sm-6"
+        [cardIcon]="'add'"
+        [cardCategory]="'Your Created Tickets Count'"
+        [cardTitle]="userAssignedAndCreatedTicketsCount[1].toString()"
+      ></app-stat-card>
+    </div>
+    <div class="row">
+      <app-graph-card
+        class="col-md-4"
+        [items]="ticketsByPriority"
+        [cardTitle]="'Tickets By Priority Level'"
+      ></app-graph-card>
+      <app-graph-card
+        class="col-md-4"
+        [items]="projectsByPriority"
+        [cardTitle]="'Projects By Priority Level'"
+      ></app-graph-card>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <div class="areachart-wrapper">
+              <ngx-charts-pie-chart
+                [view]="view"
+                [results]="projectsByActiveTickets"
+                [legend]="showLegend"
+                [labels]="showLabels"
+                [doughnut]="doughnut"
+              >
+              </ngx-charts-pie-chart>
+            </div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Projects By Open Tickets</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <app-mini-tickets-menu-card
+        class="col-lg-6 col-md-12"
+      ></app-mini-tickets-menu-card>
+
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-warning">
+            <h4 class="card-title">Newest Tickets</h4>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <th>ID</th>
+                <th>Ticket Title</th>
+                <th>Made By</th>
+                <th>Created</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ticket of tickets">
+                  <td>{{ ticket.id }}</td>
+                  <td>{{ ticket.ticketTitle }}</td>
+                  <td>{{ ticket.submitUser.userName }}</td>
+                  <td>
+                    {{ this.datepipe.transform(ticket.deadline, "yyyy-MM-dd") }}
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      title="View ticket"
+                      class="btn btn-primary btn-link btn-sm"
+                      (click)="openTicket(ticket)"
+                    >
+                      <i class="material-icons">visibility</i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

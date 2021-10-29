@@ -1,0 +1,8 @@
+.dropdown-menu-moded .text {
+    width: 600px !important;
+    height: 4px !important;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

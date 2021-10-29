@@ -1,0 +1,42 @@
+<div class="card card-stats">
+    <div class="card-header card-header-primary card-header-icon">
+      <div class="card-icon">
+        <i class="material-icons">priority_high</i>
+      </div>
+      <p class="card-category">Priority:</p>
+      <h3 class="card-title">
+        {{priority.priorityType}}
+      </h3>
+    </div>
+    <div class="card-header card-header-success card-header-icon"></div>
+    <div class="card-footer">      
+        <a >Priority level: {{priority.importance}}</a>
+    </div>
+    <div class="card-header card-header-success card-header-icon"></div>
+    <div class="card-footer">      
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary tn btn-primary btn-link btn-sm" id="assignUserDropdownForm" ngbDropdownToggle
+        rel="tooltip"
+          title="Assign User To Ticket">
+          <i class="material-icons">edit</i>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownFormTag">
+          <form class="px-4 py-3"  #updatePriorityForm="ngForm" (ngSubmit)="onUpdatePriority(updatePriorityForm)">
+            <div class="form-group">
+              <label for="assignUserDropdownFormUsername">New Priority Name</label>
+              <input ngModel name="priority_name" #input required type="text" class="form-control" [(ngModel)]="this.priority.priorityType" >
+            </div>
+            <div class="form-group">
+                <label for="assignUserDropdownFormUsername">New Priority Level</label>
+               <ng-number-picker  #importance name="priority_level"  [max]="10" [min]="1" [(value)]="value"></ng-number-picker>
+            </div>
+           
+            <button [disabled]="!updatePriorityForm.valid" type="submit" class="btn btn-primary">Update Priority</button>
+          </form>
+         
+        </div>
+      </div>
+    </div>
+   
+  </div>
+

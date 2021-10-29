@@ -1,0 +1,117 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Add Project</h4>
+          </div>
+          <div class="card-body">
+            <form
+              #addProjectForm="ngForm"
+              (ngSubmit)="onAddProject(addProjectForm)"
+            >
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Project Title</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      ngModel
+                      name="project_title"
+                      #input
+                      required
+                      maxlength="50"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="bmd-label-floating"
+                      >Project Description</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      ngModel
+                      name="project_description"
+                      #input
+                      required
+                      maxlength="2000"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <div ngbDropdown class="d-inline-block">
+                    <button
+                      class="btn btn-outline-primary"
+                      id="priorityDropDown"
+                      ngbDropdownToggle
+                      type="button"
+                    >
+                      Priority
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="priorityDropDown">
+                      <button
+                        ngbDropdownItem
+                        *ngFor="let prio of priorities"
+                        (click)="setPriority(prio)"
+                        type="button"
+                      >
+                        Type: {{ prio.priorityType }} | Importance:
+                        {{ prio.importance }} (higher the more important)
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2 center" align-items="center">
+                  <label
+                    class="bmd-label-floating center"
+                    text-align="center"
+                    vertical-align="middle"
+                    >Project Priority:
+                    {{ this?.selectedPriority?.priorityType }} <br />
+                    Importance level: {{ this?.selectedPriority?.importance }}
+                  </label>
+                </div>
+                <div class="col-md-2 center" align-items="center">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      Project open
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        [(ngModel)]="tickBoxDefault"
+                        ngModel
+                        name="project_status"
+                      />
+                      <span class="form-check-sign">
+                        <span class="check"></span>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary pull-right"
+                [disabled]="!addProjectForm.valid"
+              >
+                Add Project
+              </button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!--<div class="card card-stats col-md-4">
+          </div>-->
+    </div>
+  </div>
+</div>

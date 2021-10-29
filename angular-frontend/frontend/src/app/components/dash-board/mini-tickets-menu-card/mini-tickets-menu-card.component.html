@@ -1,0 +1,128 @@
+<div class="card">
+  <!--<div class="card-header card-header-tabs card-header-primary">-->
+  <div class="nav-tabs-navigation">
+    <div class="">
+      <ul
+        ngbNav
+        #nav="ngbNav"
+        [(activeId)]="active"
+        class="nav-tabs card-header card-header-tabs card-header-primary"
+      >
+        <li [ngbNavItem]="1">
+          <a ngbNavLink class=""
+            >Assigned tickets <i class="material-icons">bug_report</i></a
+          >
+
+          <ng-template ngbNavContent>
+            <div class="card-body table-responsive">
+              <table class="table table-hover">
+                <thead class="text-primary">
+                  <th>ID</th>
+                  <th>Title of Ticket</th>
+                  <th>Deadline</th>
+                  <th></th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let ticket of assignedTickets">
+                    <td>{{ ticket.id }}</td>
+                    <td>{{ ticket.ticketTitle }}</td>
+                    <td>
+                      {{
+                        this.datepipe.transform(ticket.deadline, "yyyy-MM-dd")
+                      }}
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        rel="tooltip"
+                        title="View ticket"
+                        class="btn btn-primary btn-link btn-sm"
+                        (click)="openTicket(ticket)"
+                      >
+                        <i class="material-icons">visibility</i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <button
+              type="button"
+              rel="tooltip"
+              title="Previous 5 Tickets"
+              class="btn btn-primary btn-link btn-sm"
+              (click)="previousTickets()"
+            >
+              <i class="material-icons">chevron_left</i>
+            </button>
+            <button
+              type="button"
+              rel="tooltip"
+              title="Next 5 Tickets"
+              class="btn btn-primary btn-link btn-sm"
+              (click)="nextTickets()"
+            >
+              <i class="material-icons">chevron_right</i>
+            </button>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <a ngbNavLink class="card-header"
+            >Created Tickets <i class="material-icons">code</i>
+          </a>
+          <ng-template ngbNavContent>
+            <div class="card-body table-responsive">
+              <table class="table table-hover">
+                <thead class="text-primary">
+                  <th>ID</th>
+                  <th>Title of Ticket</th>
+                  <th>Project</th>
+                  <th></th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let ticket of createdTickets">
+                    <td>{{ ticket.id }}</td>
+                    <td>{{ ticket.ticketTitle }}</td>
+                    <td>{{ ticket.project.projectName }}</td>
+                    <td>
+                      <button
+                        type="button"
+                        rel="tooltip"
+                        title="View ticket"
+                        class="btn btn-primary btn-link btn-sm"
+                        (click)="openTicket(ticket)"
+                      >
+                        <i class="material-icons">visibility</i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <button
+              type="button"
+              rel="tooltip"
+              title="Previous 5 Tickets"
+              class="btn btn-primary btn-link btn-sm"
+              (click)="previousCreatedTickets()"
+            >
+              <i class="material-icons">chevron_left</i>
+            </button>
+            <button
+              type="button"
+              rel="tooltip"
+              title="Next 5 Tickets"
+              class="btn btn-primary btn-link btn-sm"
+              (click)="nextCreatedTickets()"
+            >
+              <i class="material-icons">chevron_right</i>
+            </button>
+          </ng-template>
+        </li>
+      </ul>
+
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </div>
+  </div>
+  <!--- </div>  -->
+</div>

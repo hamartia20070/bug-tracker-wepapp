@@ -1,0 +1,364 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">{{ ticket.ticketTitle }}</h4>
+          </div>
+          <div class="card-body">
+            <div class="card-title">
+              <h4>Description</h4>
+            </div>
+            <div class="card-title">
+              <p>
+                {{ ticket.ticketDesc }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header card-header-warning">
+            <h4 class="card-title">Ticket History</h4>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <th>Old Title</th>
+                <th>Old Description</th>
+                <th>Date Changed</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let history of ticketHistory">
+                  <td>{{ history.oldTitle }}</td>
+                  <td>{{ history.oldDesc }}</td>
+                  <td>
+                    {{
+                      this.datepipe.transform(history.dateChanged, "yyyy-MM-dd")
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button
+              type="button"
+              rel="tooltip"
+              title="Previous 10 History"
+              class="btn btn-primary btn-link btn-sm"
+              (click)="previousTicketHistory()"
+            >
+              <i class="material-icons">chevron_left</i>
+            </button>
+            <button
+              type="button"
+              rel="tooltip"
+              title="Next 10 History"
+              class="btn btn-primary btn-link btn-sm"
+              (click)="nextTicketHistory()"
+            >
+              <i class="material-icons">chevron_right</i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-stats col-md-4">
+        <div class="card-header card-header-primary card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">bug_report</i>
+          </div>
+          <h3 class="card-title">Ticket Details</h3>
+        </div>
+
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer">
+          <a
+            >Start date:
+            {{
+              this.datepipe.transform(this.ticket.ticketCreated, "yyyy-MM-dd")
+            }}</a
+          >
+        </div>
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer">
+          <a>Priority: {{ ticket.ticketPriority.priorityType }}</a>
+        </div>
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer">
+          <a>Owner: {{ ticket.submitUser.userName }}</a>
+        </div>
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer">
+          <a>Assigned user: {{ ticket?.assignedUser?.userName }}</a>
+        </div>
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer">
+          <a
+            >Deadline:
+            {{ this.datepipe.transform(this.ticket.deadline, "yyyy-MM-dd") }}</a
+          >
+        </div>
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer container-fluid">
+          <a>Tags: </a>
+          <div class="stats row col-md-12 container-fluid">
+            <button
+              type="button"
+              rel="tooltip"
+              title="View tickets with this tag"
+              class="btn btn-info btn-link btn-sm"
+              *ngFor="let tag of ticket.tags"
+              (click)="onTagClick(tag)"
+            >
+              <a>{{ tag.tag }} </a>
+            </button>
+          </div>
+        </div>
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer">
+          <a>Edit Ticket: </a>
+          <button
+            type="button"
+            rel="tooltip"
+            title="Edit Ticket"
+            class="btn btn-primary btn-link btn-sm"
+            [disabled]="this.editTicketButtonDisabled"
+            (click)="openEditTicket()"
+          >
+            <i class="material-icons">edit</i>
+          </button>
+        </div>
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col">
+              <div ngbDropdown class="d-inline-block">
+                <button
+                  class="btn btn-outline-primary tn btn-primary btn-link btn-sm"
+                  id="assignUserDropdownForm"
+                  ngbDropdownToggle
+                  rel="tooltip"
+                  title="Assign User To Ticket"
+                  [disabled]="this.editTicketButtonDisabled"
+                >
+                  <i class="material-icons">edit</i>
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+                  <form
+                    class="px-4 py-3"
+                    #assignUserForm="ngForm"
+                    (ngSubmit)="onAssignUser(assignUserForm)"
+                  >
+                    <div class="form-group">
+                      <label for="assignUserDropdownFormUsername"
+                        >User's Name</label
+                      >
+                      <input
+                        ngModel
+                        name="assign_username"
+                        #input
+                        required
+                        type="text"
+                        class="form-control"
+                        id="assignUserDropdownFormUsername"
+                        placeholder="username"
+                        autocomplete="username"
+                      />
+                    </div>
+
+                    <button
+                      [disabled]="!assignUserForm.valid"
+                      type="submit"
+                      class="btn btn-primary"
+                    >
+                      Assign User
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <a>: Assign User To Ticket </a>
+        </div>
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-md-12">
+              <div
+                ngbDropdown
+                class="d-inline-block"
+                placement="bottom-right"
+                [autoClose]="false"
+              >
+                <button
+                  class="btn btn-outline-primary tn btn-primary btn-link btn-sm"
+                  id="assignUserDropdownForm"
+                  ngbDropdownToggle
+                  [disabled]="this.editTicketButtonDisabled"
+                >
+                  <i class="material-icons">add</i>
+                </button>
+                <div
+                  ngbDropdownMenu
+                  aria-labelledby="dropdownFormTags"
+                  class="row dropdown-menu-moded"
+                >
+                  <div class="card-footer container-fluid">
+                    <div class="row col-md-12 container-fluid">
+                      <a> Tags (only shows tags not yet added): </a>
+
+                      <button
+                        type="button"
+                        ngbDropdownItem
+                        *ngFor="let tag of this.allTags"
+                        #button
+                        (click)="onTagSelect(tag); disableButtonForever(button)"
+                        [disabled]="
+                          this.foreverDisabledButtons.includes(button)
+                        "
+                      >
+                        <a>{{ tag.tag }} </a>
+                      </button>
+                      <br />
+                      <a class="text"></a>
+                    </div>
+                  </div>
+                  <div class="row col-md-12 container-fluid">
+                    <a> Tags to be added: {{ this.selectedTags | json }}</a>
+                  </div>
+                  <div class="row col-md-12 container-fluid pull-right">
+                    <button
+                      class="btn tn btn-primary btn-link btn-sm"
+                      id="assignUserDropdownForm"
+                      (click)="onAddTags()"
+                      [disabled]="this.selectedTags.length == 0"
+                    >
+                      <i class="material-icons">add</i> Add tags
+                    </button>
+                    <button
+                      class="btn tn btn-primary btn-link btn-sm"
+                      type="button"
+                      (click)="enableDisabledButtons()"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <a>: Add Tags To Ticket </a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="card">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title">Comments</h4>
+        </div>
+        <div class="card-body">
+          <!-- For each comment-->
+          <div class="row" *ngFor="let comment of ticketComments">
+            <div class="card card-stats col-md-12">
+              <div class="card-header card-header-primary card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">person</i>
+                </div>
+                <h4 class="card-title">User: {{ comment.user.userName }}</h4>
+              </div>
+
+              <div
+                class="card-header card-header-success card-header-icon"
+              ></div>
+              <div class="card-footer">
+                <a>{{ comment.message }}</a>
+              </div>
+              <div
+                class="card-header card-header-success card-header-icon"
+              ></div>
+              <div class="card-footer"></div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col col-md-12">
+              <div
+                ngbDropdown
+                class="d-inline-block col-md-12"
+                placement="top-left"
+              >
+                <button
+                  class="btn btn-outline-primary tn btn-primary btn-link btn-sm"
+                  id="assignUserDropdownForm"
+                  ngbDropdownToggle
+                  rel="tooltip"
+                  title="Add comment"
+                >
+                  <i class="material-icons">add</i>
+                </button>
+                <div
+                  ngbDropdownMenu
+                  aria-labelledby="dropdownForm1"
+                  class="col-md-12"
+                >
+                  <form
+                    class="px-4 py-3"
+                    #addCommentForm="ngForm"
+                    (ngSubmit)="onAddComment(addCommentForm)"
+                  >
+                    <div class="form-group">
+                      <label for="assignUserDropdownFormUsername"
+                        >Type your comment</label
+                      >
+                      <textarea
+                        ngModel
+                        name="comment_message"
+                        #input
+                        required
+                        cols="40"
+                        rows="5"
+                        type="text"
+                        class="form-control"
+                        id="assignUserDropdownFormUsername"
+                        placeholder="comment (max 800char)"
+                        maxlength="800"
+                      ></textarea>
+                    </div>
+
+                    <button
+                      [disabled]="!addCommentForm.valid"
+                      type="submit"
+                      class="btn btn-primary"
+                    >
+                      Submit
+                    </button>
+                  </form>
+                </div>
+                <button
+                  type="button"
+                  rel="tooltip"
+                  title="Previous 10 Comments"
+                  class="btn btn-primary btn-link btn-sm"
+                  (click)="previousComments()"
+                >
+                  <i class="material-icons">chevron_left</i>
+                </button>
+                <button
+                  type="button"
+                  rel="tooltip"
+                  title="Next 10 Comments"
+                  class="btn btn-primary btn-link btn-sm"
+                  (click)="nextComments()"
+                >
+                  <i class="material-icons">chevron_right</i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        <div ngbDropdown class="d-inline-block">
+          <button
+            class="btn btn-primary btn-link btn-outline-primary"
+            id="addTagDropDown"
+            ngbDropdownToggle
+            rel="tooltip"
+            title="Add New Priority"
+          >
+            Add New Priority
+            <i class="material-icons">add</i>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownFormTag">
+            <form
+              class="px-4 py-3"
+              #addPriorityForm="ngForm"
+              (ngSubmit)="onAddPriority(addPriorityForm)"
+            >
+              <div class="form-group">
+                <label for="assignUserDropdownFormUsername"
+                  >New Priority Name</label
+                >
+                <input
+                  ngModel
+                  name="priority_name"
+                  #input
+                  required
+                  type="text"
+                  class="form-control"
+                  placeholder="Priority Name..."
+                />
+              </div>
+              <div class="form-group">
+                <label for="assignUserDropdownFormUsername"
+                  >New Priority Level</label
+                >
+                <ng-number-picker
+                  #importance
+                  name="priority_level"
+                  [max]="10"
+                  [min]="1"
+                  [(value)]="value"
+                ></ng-number-picker>
+              </div>
+
+              <button
+                [disabled]="!addPriorityForm.valid"
+                type="submit"
+                class="btn btn-primary"
+              >
+                Add Priority
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <app-priority-card
+        class="col-md-4 col-sm-2"
+        *ngFor="let priority of priorities"
+        [priority]="priority"
+      ></app-priority-card>
+    </div>
+    <div class="row"></div>
+  </div>
+</div>

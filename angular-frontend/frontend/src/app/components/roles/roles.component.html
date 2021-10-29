@@ -1,0 +1,51 @@
+<div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2">
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-info btn-link btn-outline-info" id="addTagDropDown" ngbDropdownToggle
+            rel="tooltip"
+              title="Add New Role">
+              Add New Role
+              <i class="material-icons">add</i>
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownFormTag">
+              <form class="px-4 py-3"  #addRoleForm="ngForm">
+                <div class="form-group">
+                  <label for="assignUserDropdownFormUsername">New Role Name</label>
+                  <input ngModel name="role_name" #input required type="text" class="form-control" placeholder="Role Name..." >
+                </div>
+                <div class="form-group">
+                 
+                  <div ngbDropdown class="d-inline-block">
+                    <button
+                      class="btn btn-outline-info "
+                      id="priorityDropDown"
+                      ngbDropdownToggle
+                      type="button"
+                    >
+                      Role
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="priorityDropDown">
+                      <button ngbDropdownItem (click)="onRoleClick(1,addRoleForm)">Read</button>
+                      <button ngbDropdownItem (click)="onRoleClick(2,addRoleForm)">Read & Write</button>
+                      <button ngbDropdownItem (click)="onRoleClick(3,addRoleForm)">Owner</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+  
+          <app-role-card class=" col-md-3 col-sm-2" *ngFor="let role of roles" [role]="role"></app-role-card>
+  
+      </div>
+      <div class="row">
+      </div>
+    </div>
+  </div>
+

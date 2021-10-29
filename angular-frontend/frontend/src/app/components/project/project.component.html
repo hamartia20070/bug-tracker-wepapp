@@ -1,0 +1,249 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">{{ this.project.projectName }}</h4>
+          </div>
+          <div class="card-body">
+            <div class="card-title">
+              <h4>Description</h4>
+            </div>
+            <div class="card-title">
+              <p>
+                {{ this.project.projectDescription }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header card-header-warning">
+            <h4 class="card-title">Assigned Users</h4>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <th>ID</th>
+                <th>Username</th>
+                <th>Completed Tickets</th>
+                <th>Created Tickets</th>
+                <th>Assigned Tickets</th>
+                <th>Role and access level</th>
+              </thead>
+
+              <tbody>
+                <tr
+                  app-project-user-list-row
+                  *ngFor="let user of users"
+                  [user]="user"
+                  [project]="project"
+                ></tr>
+              </tbody>
+            </table>
+            <button
+              type="button"
+              rel="tooltip"
+              title="Previous 10 Users"
+              class="btn btn-primary btn-link btn-sm"
+              (click)="previousUsers()"
+            >
+              <i class="material-icons">chevron_left</i>
+            </button>
+            <button
+              type="button"
+              rel="tooltip"
+              title="Next 10 users"
+              class="btn btn-primary btn-link btn-sm"
+              (click)="nextUsers()"
+            >
+              <i class="material-icons">chevron_right</i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-stats col-md-4">
+        <div class="card-header card-header-primary card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">assignment</i>
+          </div>
+          <h3 class="card-title">Project Details</h3>
+        </div>
+
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer">
+          <a
+            >Start date:
+            {{
+              this.datepipe.transform(this.project.dateStarted, "yyyy-MM-dd")
+            }}</a
+          >
+        </div>
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer">
+          <a>Tickets: {{ this.noOfTickets }}</a>
+        </div>
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer">
+          <a>Priority: {{ this.project.projectPriority.priorityType }}</a>
+        </div>
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer">
+          <a>Status: {{ this.project.projectOpen ? "Open" : "Closed" }}</a>
+        </div>
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer">
+          <a>No of assigned users: {{ this.noOfUsers }}</a>
+        </div>
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer">
+          <a>Edit Project: </a>
+          <button
+            type="button"
+            rel="tooltip"
+            title="Edit Project"
+            class="btn btn-primary btn-link btn-sm"
+            [disabled]="this.editProjectAndCreateTicketButton"
+            (click)="openEditProject()"
+          >
+            <i class="material-icons">edit</i>
+          </button>
+        </div>
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer">
+          <a>Create Ticket: </a>
+          <button
+            type="button"
+            rel="tooltip"
+            title="Create Ticket"
+            class="btn btn-primary btn-link btn-sm"
+            [disabled]="this.editProjectAndCreateTicketButton"
+            (click)="openAddTicket()"
+          >
+            <i class="material-icons">add</i>
+          </button>
+        </div>
+        <div class="card-header card-header-success card-header-icon"></div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col">
+              <div ngbDropdown class="d-inline-block">
+                <button
+                  class="btn btn-outline-primary tn btn-primary btn-link btn-sm"
+                  id="assignUserDropdownForm"
+                  ngbDropdownToggle
+                  rel="tooltip"
+                  title="Add User To Project"
+                  [disabled]="this.addUserButtonDisabled"
+                >
+                  <i class="material-icons">edit</i>
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+                  <form
+                    #addUserForm="ngForm"
+                    class="px-4 py-3"
+                    (ngSubmit)="onAddUser(addUserForm)"
+                  >
+                    <div class="form-group">
+                      <label for="assignUserDropdownFormUsername"
+                        >User's Name</label
+                      >
+                      <input
+                        type="text"
+                        ngModel
+                        name="username"
+                        class="form-control"
+                        id="assignUserDropdownFormUsername"
+                        placeholder="username"
+                        autocomplete="username"
+                        #input
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="assignUserDropdownFormRole"
+                        >User's Role:</label
+                      >
+
+                      <div ngbDropdown class="d-inline-block">
+                        <button
+                          class="btn btn-primary btn-link btn-sm"
+                          id="priorityDropDown"
+                          ngbDropdownToggle
+                          type="button"
+                          [disabled]="!addUserForm.valid"
+                        >
+                          Roles:
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="priorityDropDown">
+                          <button
+                            ngbDropdownItem
+                            *ngFor="let role of roles"
+                            type="submit"
+                            ngModel
+                            name="role"
+                            (click)="setRole(role.id)"
+                          >
+                            Role : {{ role.roleType }} Access Level:
+                            {{
+                              role.accessLevel == 1
+                                ? "Read"
+                                : "" || role.accessLevel == 2
+                                ? "Read & Write"
+                                : "" || role.accessLevel == 3
+                                ? "Owner"
+                                : ""
+                            }}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <a>: Add User To Project </a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <app-tickets-card [project]="project"></app-tickets-card>
+      </div>
+
+      <div class="card card-stats col-md-3 pull-right">
+        <div class="card-header card-header-primary card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">person</i>
+          </div>
+
+          <h3 class="card-title">{{ this.thisUserLink.user.userName }}</h3>
+        </div>
+        <div class="card-category">
+          <div class="stats">
+            <a>Your role: {{ this.thisUserLink.role.roleType }}</a>
+          </div>
+        </div>
+        <div class="card-category">
+          <div class="stats">
+            <a
+              >Your access level:
+              {{
+                this.thisUserLink.role.accessLevel == 1
+                  ? "Read"
+                  : "" || this.thisUserLink.role.accessLevel == 2
+                  ? "Read & Write"
+                  : "" || this.thisUserLink.role.accessLevel == 3
+                  ? "Owner"
+                  : ""
+              }}</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

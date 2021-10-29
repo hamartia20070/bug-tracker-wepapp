@@ -1,0 +1,75 @@
+<div class="card card-stats">
+  <div class="card-header card-header-danger card-header-icon">
+    <div
+      class="card-icon car"
+      [ngClass]="{
+        'card-header card-header-success card-header-icon':
+          this.project.projectOpen == true,
+        'card-header card-header-danger card-header-icon':
+          this.project.projectOpen == false
+      }"
+    >
+      <i class="material-icons">assignment</i>
+    </div>
+    <p class="card-category">
+      Project: {{ project.projectOpen ? "Open" : "Closed" }}
+    </p>
+    <h3 class="card-title">
+      {{ this.project.projectName }}
+    </h3>
+  </div>
+  <div class="card-footer">
+    <div class="stats">
+      <a>Open Tickets: {{ this.stats[0] }}</a>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="stats">
+      <a>Closed Tickets: {{ this.stats[1] }}</a>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="stats text-warning">
+      <a>Your Assigned Tickets: {{ this.stats[2] }}</a>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="stats">
+      <a
+        >Priority: {{ this.project?.projectPriority?.priorityType }} && Level:
+        {{ this.project?.projectPriority?.importance }}</a
+      >
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="stats text-success">
+      <a>
+        Your role:
+        {{
+          this?.projectUserLink?.role?.roleType || "Not Assigned To Project"
+        }}</a
+      >
+    </div>
+  </div>
+  <div class="card-footer">
+    <button
+      type="button"
+      rel="tooltip"
+      title="View project"
+      class="btn btn-primary btn-link btn-sm"
+      (click)="openProject()"
+      [disabled]="viewDisabled"
+    >
+      <i class="material-icons">visibility</i>
+    </button>
+    <button
+      type="button"
+      rel="tooltip"
+      title="Add yourself to project (adds you as a owner for demo's sake)"
+      class="btn btn-primary btn-link btn-sm"
+      (click)="addUserToProject()"
+    >
+      <i class="material-icons">add</i>
+    </button>
+  </div>
+</div>

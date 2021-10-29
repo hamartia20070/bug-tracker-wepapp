@@ -1,0 +1,87 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        <div ngbDropdown class="d-inline-block">
+          <button
+            class="btn btn-outline-primary"
+            id="priorityDropDown"
+            ngbDropdownToggle
+            type="button"
+          >
+            Sort By: {{ this.sortBy }}
+          </button>
+          <div ngbDropdownMenu aria-labelledby="priorityDropDown">
+            <button ngbDropdownItem (click)="changeSortBy('created')">
+              Date Created
+            </button>
+            <button ngbDropdownItem (click)="changeSortBy('priority')">
+              Priority
+            </button>
+            <button ngbDropdownItem (click)="changeSortBy('deadline')">
+              Deadline
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div ngbDropdown class="d-inline-block">
+          <button
+            class="btn btn-outline-primary"
+            id="priorityDropDown"
+            ngbDropdownToggle
+            type="button"
+          >
+            Get By:
+            {{ this.tag.id == 0 ? this.getBy : "Getting Tickets With Tag: "+this.tag.tag }}
+          </button>
+          <div ngbDropdownMenu aria-labelledby="priorityDropDown">
+            <button ngbDropdownItem (click)="changeGetBy('all')">All</button>
+            <button ngbDropdownItem (click)="changeGetBy('owned by')">
+              Owned by you
+            </button>
+            <button ngbDropdownItem (click)="changeGetBy('assigned to')">
+              Assigned to ticket
+            </button>
+            <button ngbDropdownItem (click)="changeGetBy('active')">
+              Active
+            </button>
+            <button ngbDropdownItem (click)="changeGetBy('onhold')">
+              On Hold
+            </button>
+            <button ngbDropdownItem (click)="changeGetBy('closed')">
+              Closed
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+    <div class="row">
+      <app-ticket-card
+        class="col-lg-3 col-md-6 col-sm-6"
+        *ngFor="let ticket of tickets"
+        (onTagClicked)="changeTag($event)"
+        [ticket]="ticket"
+      ></app-ticket-card>
+    </div>
+    <button
+      type="button"
+      rel="tooltip"
+      title="Previous 10 Tickets"
+      class="btn btn-primary btn-link btn-sm btn-outline-primary"
+      (click)="previousTickets()"
+    >
+      <i class="material-icons">chevron_left</i>
+    </button>
+    <button
+      type="button"
+      rel="tooltip"
+      title="Next 10 Tickets"
+      class="btn btn-primary btn-link btn-sm btn-outline-primary"
+      (click)="nextTickets()"
+    >
+      <i class="material-icons">chevron_right</i>
+    </button>
+  </div>
+</div>

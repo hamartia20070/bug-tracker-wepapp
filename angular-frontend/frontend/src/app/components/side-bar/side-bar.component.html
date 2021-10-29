@@ -1,0 +1,136 @@
+<div
+  class="sidebar"
+  data-color="purple"
+  data-background-color="white"
+  data-image="../assets/img/sidebar-1.jpg"
+>
+  <!--
+      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+      Tip 2: you can also add an image using data-image tag
+  -->
+  <div class="logo">
+    <a
+      routerLink="./dashboard"
+      (click)="onClick(dashBoard)"
+      class="simple-text logo-normal"
+    >
+      Bug Tracker
+    </a>
+  </div>
+  <div class="sidebar-wrapper">
+    <ul class="nav">
+      <li
+        class="nav-item"
+        [ngClass]="
+          activeButton == dashBoard || activeButton == null
+            ? 'nav-item active'
+            : 'nav-item'
+        "
+      >
+        <a
+          class="nav-link"
+          #dashBoard
+          routerLink="./dashboard"
+          (click)="onClick(dashBoard)"
+        >
+          <i class="material-icons">dashboard</i>
+          <p>Dashboard</p>
+        </a>
+      </li>
+      <li
+        class="nav-item"
+        [ngClass]="activeButton == userProfile ? 'nav-item active' : 'nav-item'"
+      >
+        <a
+          class="nav-link"
+          #userProfile
+          routerLink="./profile"
+          (click)="onClick(userProfile)"
+        >
+          <i class="material-icons">account_box</i>
+          <p>User Profile</p>
+        </a>
+      </li>
+      <li
+        class="nav-item"
+        [ngClass]="activeButton == projects ? 'nav-item active' : 'nav-item'"
+      >
+        <a
+          class="nav-link"
+          #projects
+          routerLink="./projects"
+          (click)="onClick(projects)"
+        >
+          <i class="material-icons">view_list</i>
+          <p>Projects</p>
+        </a>
+      </li>
+      <li
+        class="nav-item"
+        [ngClass]="activeButton == tickets ? 'nav-item active' : 'nav-item'"
+      >
+        <a
+          class="nav-link"
+          #tickets
+          routerLink="./tickets"
+          (click)="onClick(tickets)"
+        >
+          <i class="material-icons">task</i>
+          <p>Tickets</p>
+        </a>
+      </li>
+      <li
+        class="nav-item"
+        [ngClass]="activeButton == users ? 'nav-item active' : 'nav-item'"
+      >
+        <a
+          class="nav-link"
+          #users
+          routerLink="./users"
+          (click)="onClick(users)"
+        >
+          <i class="material-icons">person</i>
+          <p>Users</p>
+        </a>
+      </li>
+      <li
+        class="nav-item"
+        [ngClass]="activeButton == tags ? 'nav-item active' : 'nav-item'"
+      >
+        <a class="nav-link" #tags routerLink="./tags" (click)="onClick(tags)">
+          <i class="material-icons">sell</i>
+          <p>Tags</p>
+        </a>
+      </li>
+      <li
+        class="nav-item"
+        [ngClass]="activeButton == roles ? 'nav-item active' : 'nav-item'"
+      >
+        <a
+          class="nav-link"
+          #roles
+          routerLink="./roles"
+          (click)="onClick(roles)"
+        >
+          <i class="material-icons">settings_input_component</i>
+          <p>Roles</p>
+        </a>
+      </li>
+      <li
+        class="nav-item"
+        [ngClass]="activeButton == priorities ? 'nav-item active' : 'nav-item'"
+      >
+        <a
+          class="nav-link"
+          #priorities
+          routerLink="./priorities"
+          (click)="onClick(priorities)"
+        >
+          <i class="material-icons">running_with_errors</i>
+          <p>Priorities</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

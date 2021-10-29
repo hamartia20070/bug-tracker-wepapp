@@ -1,0 +1,35 @@
+<td>{{ ticket.id }}</td>
+<td>{{ ticket.ticketTitle }}</td>
+<td>{{ ticket.status }}</td>
+<td>{{ this.datepipe.transform(ticket.ticketCreated, "yyyy-MM-dd") }}</td>
+<td>{{ ticket.submitUser.userName }}</td>
+<td>{{ ticket.assignedUser?.userName }}</td>
+<td>{{ ticket.ticketPriority.priorityType }}</td>
+<td>
+  <div ngbDropdown class="d-inline-block">
+    <button
+      class="btn btn-primary btn-link btn-sm"
+      id="priorityDropDown"
+      ngbDropdownToggle
+      type="button"
+    >
+      Tags:
+    </button>
+    <div ngbDropdownMenu aria-labelledby="priorityDropDown">
+      <button ngbDropdownItem *ngFor="let tag of ticket.tags">
+        {{ tag.tag }}
+      </button>
+    </div>
+  </div>
+</td>
+<td>
+  <button
+    type="button"
+    rel="tooltip"
+    title="View ticket"
+    class="btn btn-primary btn-link btn-sm"
+    (click)="openTicket()"
+  >
+    <i class="material-icons">visibility</i>
+  </button>
+</td>

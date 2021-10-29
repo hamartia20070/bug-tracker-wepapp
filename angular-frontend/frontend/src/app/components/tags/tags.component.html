@@ -1,0 +1,35 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-primary btn-link btn-outline-primary" id="addTagDropDown" ngbDropdownToggle
+          rel="tooltip"
+            title="Add New Tag">
+            Add New Tag
+            <i class="material-icons">add</i>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownFormTag">
+            <form class="px-4 py-3"  #addTagForm="ngForm" (ngSubmit)="onAddTag(addTagForm)">
+              <div class="form-group">
+                <label for="assignUserDropdownFormUsername">New Tag Name</label>
+                <input ngModel name="tag_name" #input required type="text" class="form-control" placeholder="Tag Name..." >
+              </div>
+             
+              <button [disabled]="!addTagForm.valid" type="submit" class="btn btn-primary">Add Tag</button>
+            </form>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <app-tag-card
+        class="col-md-4 col-sm-2"
+        *ngFor="let tag of tags"
+        [tag]="tag"
+      ></app-tag-card>
+    </div>
+    <div class="row"></div>
+  </div>
+</div>

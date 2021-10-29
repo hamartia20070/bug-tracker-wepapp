@@ -1,0 +1,33 @@
+<div class="card card-stats">
+    <div class="card-header card-header-primary card-header-icon">
+      <div class="card-icon">
+        <i class="material-icons">sell</i>
+      </div>
+      <p class="card-category">Tag:</p>
+      <h3 class="card-title">
+        {{tag.tag}}
+      </h3>
+    </div>
+    <div class="card-footer">      
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary tn btn-primary btn-link btn-sm" id="assignUserDropdownForm" ngbDropdownToggle
+        rel="tooltip"
+          title="Assign User To Ticket">
+          <i class="material-icons">edit</i>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownFormTag">
+          <form class="px-4 py-3"  #updateTagForm="ngForm" (ngSubmit)="onUpdateTag(updateTagForm)">
+            <div class="form-group">
+              <label for="assignUserDropdownFormUsername">New Tag Name</label>
+              <input ngModel name="tag_name" #input required type="text" class="form-control" placeholder="Tag Name..." >
+            </div>
+           
+            <button [disabled]="!updateTagForm.valid" type="submit" class="btn btn-primary">Update Tag</button>
+          </form>
+         
+        </div>
+      </div>
+    </div>
+   
+  </div>
+

@@ -1,0 +1,50 @@
+<div class="card card-stats">
+    <div class="card-header card-header-primary card-header-icon">
+      <div class="card-icon">
+        <i class="material-icons">person</i>
+      </div>
+      <p class="card-category">ID: {{user.id}}</p>
+      <h3 class="card-title">
+        {{user.userName}}
+      </h3>
+    </div>
+    <div class="card-footer">
+        <div class="stats">
+            <a >Email: {{user.userEmail}}</a>
+          </div>
+      
+    </div>
+    <div class="card-footer">
+        <div class="stats">
+            <a >Phone no: {{user.userPhoneNo}}</a>
+          </div>
+      
+    </div>
+    <div class="card-footer">
+        <div class="stats">
+            <a >Created tickets: {{userStats?.createdTickets}}</a>
+          </div>
+      
+    </div>
+    <div class="card-footer">
+        <div class="stats">
+            <a >Assigned tickets: {{userStats?.assignedTickets}}</a>
+          </div>
+      
+    </div>
+    <div class="card-footer">
+      <div class="stats">
+          <a >No Of Projects User is added: {{userStats?.noOfProjects}}</a>
+        </div>
+    
+  </div>
+  <div class="card-footer">
+    <div class="stats">
+        <a >Comments: {{userStats?.noOfComments}}</a>
+      </div>
+  
+  </div>
+    <div class="card-footer">
+      </div>
+  </div>
+
